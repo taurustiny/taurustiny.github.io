@@ -1,1 +1,1 @@
-# taurustiny.github.io
+# taurus.github.io
