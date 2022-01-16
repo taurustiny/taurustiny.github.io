@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Nginx | Taurus Tiny</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+<meta name="description" content="1.语法：nginx -s signal 🔗可执行文件支持的signal信号 🔗 stop 快速停止 reload 重新加载配置文件 quit 平滑停止 reopen 重新打开日志文件 nginx -s quit nginx -s reload signal">
+<meta name="generator" content="Hugo 0.86.0-DEV" />
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+
+
+  </head>
+
+  <body>
+    <nav class="navigation">
+	
+		<a href="/"> <span class="arrow">←</span>首页</a>
+	
+	<a href="/posts">归档</a>
+	<a href="/categories">分类</a>
+	<a href="/tags">标签</a>
+	<a href="/about">关于</a>
+
+	
+
+	
+</nav>
+
+
+    <main class="main">
+      
+
+<section id="single">
+    <h1 class="title">Nginx</h1>
+
+    <div class="tip">
+        <time datetime="2021-07-14 23:41:25 &#43;0800 CST">2021年07月14日</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          1174字
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          3分钟
+        </span>
+    </div>
+
+    
+    
+
+
+    <div class="content">
+      <h4 id="1语法nginx---s--signal">1.语法：nginx  -s  signal <a href="#1%e8%af%ad%e6%b3%95nginx---s--signal" class="anchor">🔗</a></h4><h5 id="可执行文件支持的signal信号">可执行文件支持的signal信号 <a href="#%e5%8f%af%e6%89%a7%e8%a1%8c%e6%96%87%e4%bb%b6%e6%94%af%e6%8c%81%e7%9a%84signal%e4%bf%a1%e5%8f%b7" class="anchor">🔗</a></h5><ul>
+<li>stop  快速停止</li>
+<li>reload  重新加载配置文件</li>
+<li>quit  平滑停止</li>
+<li>reopen  重新打开日志文件</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">nginx -s quit
+
+nginx -s reload
+
+</code></pre></div><h5 id="signal信号也能通过unix工具kill发送给nginx-master进程">signal信号也能通过unix工具kill发送给nginx master进程 <a href="#signal%e4%bf%a1%e5%8f%b7%e4%b9%9f%e8%83%bd%e9%80%9a%e8%bf%87unix%e5%b7%a5%e5%85%b7kill%e5%8f%91%e9%80%81%e7%bb%99nginx-master%e8%bf%9b%e7%a8%8b" class="anchor">🔗</a></h5><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">kill -s QUIT 1245(nginx master pid)
+</code></pre></div><h4 id="2配置文件结构">2.配置文件结构 <a href="#2%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84" class="anchor">🔗</a></h4><ul>
+<li>simple directives  简单指令</li>
+<li>block directives  块指令</li>
+<li>context  上下文（events, http, server, location)  <em>server in http, and location in server</em></li>
+<li>main context  主上下文（events 和 http指令）</li>
+</ul>
+<h4 id="3static-content">3.static content <a href="#3static-content" class="anchor">🔗</a></h4><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">http {
+    server {
+        location / {
+            root /data/www;
+        }
+        location /images/ {
+            root /data;
+        }
+    }
+}
+/data/images/1.png 响应请求 http://FQDN:PORT/images/1.png
+/data/www/test/1.html 响应请求 http://FQDN:PORT/test/1.html
+</code></pre></div><p>如果有多个location，则优先选择前缀较长的location(/images/优先于/）</p>
+<h4 id="4proxy-server">4.proxy server <a href="#4proxy-server" class="anchor">🔗</a></h4><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">#应用服务器
+server {
+    listen 8080;
+    root /data/up1; #默认root
+    location / { 
+    		#此处无root指令，默认使用上级root
+    }
+}
+#代理服务器
+server {
+    location / {
+        proxy_pass http://localhost:8080;
+    }
+    location /images/ {
+        root /data;
+    }
+}
+</code></pre></div><p>使用本地目录/data/images/中的文件处理图像请求，将所有其他请求发送到代理服务器 localhost:8080</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">server {
+    location / {
+        proxy_pass http://localhost:8080/;
+    }
+    location ~ \.(gif|jpg|png)$ {
+        root /data/images;
+    }
+}
+</code></pre></div><p>nginx首先检查指定前缀的location指令，记住最长的前缀对应的location，然后检查正则表达式。 如果网络请求与正则表达式匹配，则nginx会选择此location，否则，它将选择之前记住的location</p>
+<h4 id="5fastcgi-proxy">5.FastCGI proxy <a href="#5fastcgi-proxy" class="anchor">🔗</a></h4><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">server {
+    location / {
+        fastcgi_pass  localhost:9000;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param QUERY_STRING    $query_string;
+    }
+
+    location ~ \.(gif|jpg|png)$ {
+        root /data/images;
+    }
+}
+</code></pre></div><p>在 PHP中，SCRIPT_FILENAME:参数用于确定脚本名称，QUERY_STRING参数用于传递请求参数</p>
+<h4 id="6connection-processing-methods">6.Connection processing methods <a href="#6connection-processing-methods" class="anchor">🔗</a></h4><p>nginx将自动选择处理连接请求的最高效的方法methods:</p>
+<ul>
+<li>select</li>
+<li>poll</li>
+<li>kqueue  ( FreeBSD 4.1+, OpenBSD 2.9+, NetBSD 2.0, and macOS)</li>
+<li>epoll  (Linux 2.6+)</li>
+<li>/dev/poll  (Solaris 7 11/99+, HP/UX 11.22+ (eventport), IRIX 6.5.15+, and Tru64 UNIX 5.1A+)</li>
+<li>eventport  (Solaris 10+ (due to known issues, it is recommended using the <code>/dev/poll</code> method instead))</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Syntax:	use method;
+Default:	—
+Context:	events
+</code></pre></div><h4 id="7debugging-log">7.debugging log <a href="#7debugging-log" class="anchor">🔗</a></h4><p>验证nginx编译时配置是否支持debug，执行命令：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">nginx -V
+输出结果：configure arguments: --with-debug ...
+</code></pre></div><p>重新定义日志而不指定调试级别将禁用调试日志</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">error_log /path/to/log debug;
+http {
+    server {
+        error_log /path/to/log;
+        ...
+</code></pre></div><p>启用调试功能需要：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">error_log /path/to/log debug;
+http {
+    server {
+        error_log /path/to/log debug; #添加debug调试级别，或者注释此行
+        ...
+</code></pre></div><h4 id="8nginx日志输出到syslog">8.nginx日志输出到syslog <a href="#8nginx%e6%97%a5%e5%bf%97%e8%be%93%e5%87%ba%e5%88%b0syslog" class="anchor">🔗</a></h4><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">error_log syslog:server=192.168.1.1 debug;
+access_log syslog:server=unix:/var/log/nginx.sock,nohostname;
+access_log syslog:server=[2001:db8::1]:12345,facility=local7,tag=nginx,severity=info combined;
+</code></pre></div><p>参数解释：相关链接<a href="https://tools.ietf.org/html/rfc3164#section-4.1" target="_blank" rel="noopener">RFC 3164</a></p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">facility=string  #设置系统日志消息功能，参考RFC 3164 
+nohostname  #禁用将“hostname”字段添加到系统日志消息头中
+tag=string  #设置syslog消息的tag
+severity=string  #设置日志级别，参考RFC 3164
+</code></pre></div><h4 id="9load-balancer">9.load balancer <a href="#9load-balancer" class="anchor">🔗</a></h4><p>负载均衡机制：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">round-robin  #简单轮询 默认模式
+least-connected  #最少活跃连接数
+ip-hash  #基于client ip的会话保持
+</code></pre></div><p>Nginx中的反向代理实现包括HTTP，HTTPS，FastCGI，uwsgi，SCGI，memcached和gRPC的负载平衡</p>
+<h5 id="简单轮询">简单轮询 <a href="#%e7%ae%80%e5%8d%95%e8%bd%ae%e8%af%a2" class="anchor">🔗</a></h5><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">http {
+    upstream myapp1 {
+        server srv1.example.com;
+        server srv2.example.com;
+        server srv3.example.com;
+    }
+    server {
+        listen 80;
+        location / {
+            proxy_pass http://myapp1;
+        }
+    }
+}
+</code></pre></div><h5 id="最少连接数">最少连接数 <a href="#%e6%9c%80%e5%b0%91%e8%bf%9e%e6%8e%a5%e6%95%b0" class="anchor">🔗</a></h5><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">    upstream myapp1 {
+        least_conn;
+        server srv1.example.com;
+        server srv2.example.com;
+        server srv3.example.com;
+    }
+</code></pre></div><h5 id="ip-hash">ip-hash <a href="#ip-hash" class="anchor">🔗</a></h5><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">    upstream myapp1 {
+        ip_hash;
+        server srv1.example.com;
+        server srv2.example.com;
+        server srv3.example.com;
+    }
+</code></pre></div><h5 id="加权负载均衡">加权负载均衡 <a href="#%e5%8a%a0%e6%9d%83%e8%b4%9f%e8%bd%bd%e5%9d%87%e8%a1%a1" class="anchor">🔗</a></h5><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">    upstream myapp1 {
+        server srv1.example.com weight=3; #3
+        server srv2.example.com;  #1
+        server srv3.example.com;  #1
+    }
+</code></pre></div><h5 id="健康检查">健康检查 <a href="#%e5%81%a5%e5%ba%b7%e6%a3%80%e6%9f%a5" class="anchor">🔗</a></h5><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">upstream dynamic {
+    server backend1.example.com      weight=5;
+    server backend2.example.com:8080 fail_timeout=5s slow_start=30s;
+    server 192.0.2.1                 max_fails=3;
+    server backend3.example.com      resolve;
+    server backend4.example.com      service=http resolve;
+    server backup1.example.com:8080  backup;
+    server backup2.example.com:8080  backup;
+}
+server {
+    location / {
+        proxy_pass http://dynamic;
+        health_check;
+    }
+}
+</code></pre></div>
+    </div>
+
+    
+        <div class="tags">
+            
+                <a href="https://www.tinystone.top/tags/nginx">nginx</a>
+            
+        </div>
+    
+    
+    
+
+</section>
+
+
+    </main>
+    
+    <footer id="footer">
+    
+
+    <div class="copyright">
+    
+       © Copyright 
+       2022 
+       <span class="split">
+        <svg fill="#bbbbbb" width="15" height="15" version="1.1" id="heart-15" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 15 15">
+  <path d="M13.91,6.75c-1.17,2.25-4.3,5.31-6.07,6.94c-0.1903,0.1718-0.4797,0.1718-0.67,0C5.39,12.06,2.26,9,1.09,6.75&#xA;&#x9;C-1.48,1.8,5-1.5,7.5,3.45C10-1.5,16.48,1.8,13.91,6.75z"/>
+</svg>
+       </span>
+       Taurus Tiny
+    
+    </div>
+
+    
+</footer>
+
+
+
+  </body>
+</html>

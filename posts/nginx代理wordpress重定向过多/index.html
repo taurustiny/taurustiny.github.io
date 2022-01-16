@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>nginx代理wordpress重定向过多 | Taurus Tiny</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+<meta name="description" content="修改wp-config.php 🔗$_SERVER[&#39;HTTPS&#39;] = &#39;on&#39;; define(&#39;FORCE_SSL_LOGIN&#39;, true); define(&#39;FORCE_SSL_ADMIN&#39;, true); 或者 🔗//Begin Really Simple SSL Server variable fix $_SERVER[&#34;HTTPS&#34;] = &#34;on&#34;; //END Really Simple SSL">
+<meta name="generator" content="Hugo 0.86.0-DEV" />
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+
+
+  </head>
+
+  <body>
+    <nav class="navigation">
+	
+		<a href="/"> <span class="arrow">←</span>首页</a>
+	
+	<a href="/posts">归档</a>
+	<a href="/categories">分类</a>
+	<a href="/tags">标签</a>
+	<a href="/about">关于</a>
+
+	
+
+	
+</nav>
+
+
+    <main class="main">
+      
+
+<section id="single">
+    <h1 class="title">nginx代理wordpress重定向过多</h1>
+
+    <div class="tip">
+        <time datetime="2021-07-15 21:30:38 &#43;0800 CST">2021年07月15日</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          131字
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          1分钟
+        </span>
+    </div>
+
+    
+    
+
+
+    <div class="content">
+      <h4 id="修改wp-configphp"><strong>修改wp-config.php</strong> <a href="#%e4%bf%ae%e6%94%b9wp-configphp" class="anchor">🔗</a></h4><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">$_SERVER[&#39;HTTPS&#39;] = &#39;on&#39;;
+define(&#39;FORCE_SSL_LOGIN&#39;, true);
+define(&#39;FORCE_SSL_ADMIN&#39;, true);
+</code></pre></div><h4 id="或者">或者 <a href="#%e6%88%96%e8%80%85" class="anchor">🔗</a></h4><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">//Begin Really Simple SSL Server variable fix
+$_SERVER[&#34;HTTPS&#34;] = &#34;on&#34;;
+//END Really Simple SSL
+
+//Begin Really Simple SSL Load balancing fix
+if ((isset($_ENV[&#34;HTTPS&#34;]) &amp;&amp; (&#34;on&#34; == $_ENV[&#34;HTTPS&#34;]))
+|| (isset($_SERVER[&#34;HTTP_X_FORWARDED_SSL&#34;]) &amp;&amp; (strpos($_SERVER[&#34;HTTP_X_FORWARDED_SSL&#34;], &#34;1&#34;) !== false))
+|| (isset($_SERVER[&#34;HTTP_X_FORWARDED_SSL&#34;]) &amp;&amp; (strpos($_SERVER[&#34;HTTP_X_FORWARDED_SSL&#34;], &#34;on&#34;) !== false))
+|| (isset($_SERVER[&#34;HTTP_CF_VISITOR&#34;]) &amp;&amp; (strpos($_SERVER[&#34;HTTP_CF_VISITOR&#34;], &#34;https&#34;) !== false))
+|| (isset($_SERVER[&#34;HTTP_CLOUDFRONT_FORWARDED_PROTO&#34;]) &amp;&amp; (strpos($_SERVER[&#34;HTTP_CLOUDFRONT_FORWARDED_PROTO&#34;], &#34;https&#34;) !== false))
+|| (isset($_SERVER[&#34;HTTP_X_FORWARDED_PROTO&#34;]) &amp;&amp; (strpos($_SERVER[&#34;HTTP_X_FORWARDED_PROTO&#34;], &#34;https&#34;) !== false))
+|| (isset($_SERVER[&#34;HTTP_X_PROTO&#34;]) &amp;&amp; (strpos($_SERVER[&#34;HTTP_X_PROTO&#34;], &#34;SSL&#34;) !== false))
+) {
+$_SERVER[&#34;HTTPS&#34;] = &#34;on&#34;;
+}
+</code></pre></div>
+    </div>
+
+    
+        <div class="tags">
+            
+                <a href="https://www.tinystone.top/tags/nginx">nginx</a>
+            
+                <a href="https://www.tinystone.top/tags/wordpress">wordpress</a>
+            
+        </div>
+    
+    
+    
+
+</section>
+
+
+    </main>
+    
+    <footer id="footer">
+    
+
+    <div class="copyright">
+    
+       © Copyright 
+       2022 
+       <span class="split">
+        <svg fill="#bbbbbb" width="15" height="15" version="1.1" id="heart-15" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 15 15">
+  <path d="M13.91,6.75c-1.17,2.25-4.3,5.31-6.07,6.94c-0.1903,0.1718-0.4797,0.1718-0.67,0C5.39,12.06,2.26,9,1.09,6.75&#xA;&#x9;C-1.48,1.8,5-1.5,7.5,3.45C10-1.5,16.48,1.8,13.91,6.75z"/>
+</svg>
+       </span>
+       Taurus Tiny
+    
+    </div>
+
+    
+</footer>
+
+
+
+  </body>
+</html>
