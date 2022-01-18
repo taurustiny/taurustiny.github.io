@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Prometheus on Taurus Tiny</title>
+    <link>https://www.tinystone.top/tags/prometheus/</link>
+    <description>Recent content in Prometheus on Taurus Tiny</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 18 Jan 2022 21:57:03 +0800</lastBuildDate><atom:link href="https://www.tinystone.top/tags/prometheus/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>更新kube-prometheus-stack 导致自定义labels缺失</title>
+      <link>https://www.tinystone.top/posts/%E6%9B%B4%E6%96%B0kube-prometheus-stack-%E5%AF%BC%E8%87%B4%E8%87%AA%E5%AE%9A%E4%B9%89labels%E7%BC%BA%E5%A4%B1/</link>
+      <pubDate>Tue, 18 Jan 2022 21:57:03 +0800</pubDate>
+      
+      <guid>https://www.tinystone.top/posts/%E6%9B%B4%E6%96%B0kube-prometheus-stack-%E5%AF%BC%E8%87%B4%E8%87%AA%E5%AE%9A%E4%B9%89labels%E7%BC%BA%E5%A4%B1/</guid>
+      <description>TL;DR 🔗k8s 集群更新监控 kube-prometheus-stack导致k8s resources自定义labels 丢失 Chart Version： 19.2.3 &amp;mdash;&amp;gt; 30.0.1 R</description>
+    </item>
+    
+  </channel>
+</rss>

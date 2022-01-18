@@ -3,7 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.tinystone.top/categories/</loc>
-    <lastmod>2021-07-14T23:41:25+08:00</lastmod>
+    <lastmod>2022-01-18T21:59:08+08:00</lastmod>
+  </url><url>
+    <loc>https://www.tinystone.top/tags/cronjob/</loc>
+    <lastmod>2022-01-18T21:59:08+08:00</lastmod>
+  </url><url>
+    <loc>https://www.tinystone.top/posts/cronjob-%E5%B9%B6%E5%8F%91%E8%A7%84%E5%88%99concurrencypolicy/</loc>
+    <lastmod>2022-01-18T21:59:08+08:00</lastmod>
+  </url><url>
+    <loc>https://www.tinystone.top/tags/kubernetes/</loc>
+    <lastmod>2022-01-18T21:59:08+08:00</lastmod>
+  </url><url>
+    <loc>https://www.tinystone.top/posts/</loc>
+    <lastmod>2022-01-18T21:59:08+08:00</lastmod>
+  </url><url>
+    <loc>https://www.tinystone.top/tags/</loc>
+    <lastmod>2022-01-18T21:59:08+08:00</lastmod>
+  </url><url>
+    <loc>https://www.tinystone.top/</loc>
+    <lastmod>2022-01-18T21:59:08+08:00</lastmod>
+  </url><url>
+    <loc>https://www.tinystone.top/categories/troubleshooting/</loc>
+    <lastmod>2022-01-18T21:59:08+08:00</lastmod>
+  </url><url>
+    <loc>https://www.tinystone.top/tags/kube-state-metrics/</loc>
+    <lastmod>2022-01-18T21:57:03+08:00</lastmod>
+  </url><url>
+    <loc>https://www.tinystone.top/tags/prometheus/</loc>
+    <lastmod>2022-01-18T21:57:03+08:00</lastmod>
+  </url><url>
+    <loc>https://www.tinystone.top/posts/%E6%9B%B4%E6%96%B0kube-prometheus-stack-%E5%AF%BC%E8%87%B4%E8%87%AA%E5%AE%9A%E4%B9%89labels%E7%BC%BA%E5%A4%B1/</loc>
+    <lastmod>2022-01-18T21:57:03+08:00</lastmod>
   </url><url>
     <loc>https://www.tinystone.top/posts/nginx/</loc>
     <lastmod>2021-07-14T23:41:25+08:00</lastmod>
@@ -11,16 +41,7 @@
     <loc>https://www.tinystone.top/tags/nginx/</loc>
     <lastmod>2021-07-14T23:41:25+08:00</lastmod>
   </url><url>
-    <loc>https://www.tinystone.top/posts/</loc>
-    <lastmod>2021-07-14T23:41:25+08:00</lastmod>
-  </url><url>
     <loc>https://www.tinystone.top/categories/study/</loc>
-    <lastmod>2021-07-14T23:41:25+08:00</lastmod>
-  </url><url>
-    <loc>https://www.tinystone.top/tags/</loc>
-    <lastmod>2021-07-14T23:41:25+08:00</lastmod>
-  </url><url>
-    <loc>https://www.tinystone.top/</loc>
     <lastmod>2021-07-14T23:41:25+08:00</lastmod>
   </url>
 </urlset>

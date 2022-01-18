@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>更新kube-prometheus-stack 导致自定义labels缺失 | Taurus Tiny</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+<meta name="description" content="TL;DR 🔗k8s 集群更新监控 kube-prometheus-stack导致k8s resources自定义labels 丢失 Chart Version： 19.2.3 &mdash;&gt; 30.0.1 R">
+<meta name="generator" content="Hugo 0.86.0-DEV" />
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+
+
+
+
+
+
+
+
+  </head>
+
+  <body>
+    <nav class="navigation">
+	
+		<a href="/"> <span class="arrow">←</span>首页</a>
+	
+	<a href="/posts">归档</a>
+	<a href="/categories">分类</a>
+	<a href="/tags">标签</a>
+	<a href="/about">关于</a>
+
+	
+
+	
+</nav>
+
+
+    <main class="main">
+      
+
+<section id="single">
+    <h1 class="title">更新kube-prometheus-stack 导致自定义labels缺失</h1>
+
+    <div class="tip">
+        <time datetime="2022-01-18 21:57:03 &#43;0800 CST">2022年01月18日</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          483字
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          1分钟
+        </span>
+    </div>
+
+    
+    
+
+
+    <div class="content">
+      <h3 id="tldr">TL;DR <a href="#tldr" class="anchor">🔗</a></h3><p>k8s 集群更新监控 <a href="https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack" target="_blank" rel="noopener">kube-prometheus-stack</a>导致k8s resources自定义labels 丢失</p>
+<p>Chart Version： 19.2.3 &mdash;&gt; 30.0.1</p>
+<p><strong>Resolution</strong>：需要指定 <strong>metricLabelsAllowlist</strong>参数</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#080;font-style:italic"># --set 表示哪些 k8s resource 需要获取自定义 metrics labels</span>
+helm upgrade kube-prometheus-stack --set kube-state-metrics.metricLabelsAllowlist<span style="color:#666">=</span><span style="color:#b44">&#39;{namespces=[*],pods=[*],deployments=[*],cronjobs=[*],job=[*],daemonsets=[*],statefulsets=[*],replicasets=[*],services=[*]}&#39;</span> -f values.yaml prometheus-community/kube-prometheus-stack --version<span style="color:#666">=</span>30.0.1 -n kube-prometheus-stack
+
+<span style="color:#080;font-style:italic"># 如果不指定 --set，则隐式表达为 --set kube-state-metrics.metricLabelsAllowlist=&#39;{namespces=[*]}&#39;</span>
+</code></pre></div><h3 id="question-description">Question Description <a href="#question-description" class="anchor">🔗</a></h3><p>正常情况下，k8s集群都会安装部署一套监控系统 prometheus + grafana 来监控和展示集群中业务应用基本信息</p>
+<p>在正常部署应用时，我们会加一些自定义的 label ,例如：service、module、owner等等，并将这些 labels添加到告警邮件中，这样我们就能够迅速定位哪些业务模块发生了问题，这些业务模块是由谁 负责。以保证第一时间能够处理问题并通知到相关人员</p>
+<p>由于公司业务布局，组内维护了很多套 k8s集群，在某次告警邮件中，发现自定义的 labels 都不见了，但是其他集群却没有问题。然后就追踪到监控版本的问题。</p>
+<p>此问题在官方<a href="https://github.com/kubernetes/kube-state-metrics/issues/1489" target="_blank" rel="noopener">kube-state-metrics issue</a>和 <a href="https://kubernetes.io/blog/2021/04/13/kube-state-metrics-v-2-0/" target="_blank" rel="noopener">kubernetes blog</a> 中都有提到，以此确定是 <strong>metricLabelsAllowlist</strong> 导致的</p>
+<p><strong>Tip</strong>：<strong>helm upgrade &ndash;set 用法</strong></p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#080;font-style:italic"># value会有两种情况： 单个值 和 多值列表</span>
+--set <span style="color:#b8860b">key</span><span style="color:#666">=</span>value
+example: --set xxx.enabled<span style="color:#666">=</span><span style="color:#a2f">false</span>
+
+--set <span style="color:#b8860b">key</span><span style="color:#666">=</span>valueList
+example: --set xxx.list<span style="color:#666">=</span><span style="color:#b44">&#39;{value1,value2,value3}&#39;</span>
+
+</code></pre></div>
+    </div>
+
+    
+        <div class="tags">
+            
+                <a href="https://www.tinystone.top/tags/kubernetes">Kubernetes</a>
+            
+                <a href="https://www.tinystone.top/tags/prometheus">Prometheus</a>
+            
+                <a href="https://www.tinystone.top/tags/kube-state-metrics">Kube-state-metrics</a>
+            
+        </div>
+    
+    
+    
+
+</section>
+
+
+    </main>
+    
+    <footer id="footer">
+    
+
+    <div class="copyright">
+    
+       © Copyright 
+       2022 
+       <span class="split">
+        <svg fill="#bbbbbb" width="15" height="15" version="1.1" id="heart-15" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 15 15">
+  <path d="M13.91,6.75c-1.17,2.25-4.3,5.31-6.07,6.94c-0.1903,0.1718-0.4797,0.1718-0.67,0C5.39,12.06,2.26,9,1.09,6.75&#xA;&#x9;C-1.48,1.8,5-1.5,7.5,3.45C10-1.5,16.48,1.8,13.91,6.75z"/>
+</svg>
+       </span>
+       Taurus Tiny
+    
+    </div>
+
+    
+</footer>
+
+
+
+  </body>
+</html>
