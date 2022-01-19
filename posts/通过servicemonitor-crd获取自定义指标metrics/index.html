@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>通过serviceMonitor CRD获取自定义指标metrics | Taurus Tiny</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+<meta name="description" content="TL;DR 🔗如果各类业务系统提供**/metrics**接口，并且指标数据满足prometheus时序数据的要求，就可以通过**serviceMon">
+<meta name="generator" content="Hugo 0.86.0-DEV" />
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+
+
+
+
+
+
+
+
+  </head>
+
+  <body>
+    <nav class="navigation">
+	
+		<a href="/"> <span class="arrow">←</span>首页</a>
+	
+	<a href="/posts">归档</a>
+	<a href="/categories">分类</a>
+	<a href="/tags">标签</a>
+	<a href="/about">关于</a>
+
+	
+
+	
+</nav>
+
+
+    <main class="main">
+      
+
+<section id="single">
+    <h1 class="title">通过serviceMonitor CRD获取自定义指标metrics</h1>
+
+    <div class="tip">
+        <time datetime="2022-01-19 22:00:26 &#43;0800 CST">2022年01月19日</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          473字
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          1分钟
+        </span>
+    </div>
+
+    
+    
+
+
+    <div class="content">
+      <h2 id="tldr">TL;DR <a href="#tldr" class="anchor">🔗</a></h2><p>如果各类业务系统提供**/metrics**接口，并且指标数据满足prometheus时序数据的要求，就可以通过**serviceMonitor**获取监控指标：</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">cat &lt;&lt;EOF | kubectl apply -f -<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>monitoring.coreos.com/v1<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>ServiceMonitor<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">metadata</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">labels</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">app</span>:<span style="color:#bbb"> </span>kube-prometheus-redis<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">release</span>:<span style="color:#bbb"> </span>kube-prometheus-stack<span style="color:#bbb"> </span><span style="color:#080;font-style:italic">## CRD prometheus 通过 spec.serviceMonitorSelector 找到此标签来匹配此ServiceMonitor</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">name</span>:<span style="color:#bbb"> </span>kube-prometheus-redis<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">namespace</span>:<span style="color:#bbb"> </span>kube-prometheus-stack<span style="color:#bbb"> </span><span style="color:#080;font-style:italic">## 与&#34;helm install kube-prometheus-stack&#34;时的 namespace 保持一致</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">namespaceSelector</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">matchNames</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- default<span style="color:#bbb"> </span><span style="color:#080;font-style:italic">## 被监控业务所在的 namespace</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">endpoints</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#008000;font-weight:bold">port</span>:<span style="color:#bbb"> </span>http-metrics<span style="color:#bbb"> </span><span style="color:#080;font-style:italic">## 被监控业务 service 的 port name</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">selector</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">matchLabels</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#008000;font-weight:bold">app.kubernetes.io/instance</span>:<span style="color:#bbb"> </span>redis<span style="color:#bbb"> </span><span style="color:#080;font-style:italic">## 被监控业务 service selector</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#008000;font-weight:bold">app.kubernetes.io/name</span>:<span style="color:#bbb"> </span>redis<span style="color:#bbb">
+</span><span style="color:#bbb"></span>EOF<span style="color:#bbb">
+</span></code></pre></div><h2 id="description">Description <a href="#description" class="anchor">🔗</a></h2><p>开源监控方案 <a href="https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack" target="_blank" rel="noopener">kube-prometheus-stack</a> 会提取node基础设施和 k8s 各类resource等监控指标，但并不关心业务系统；自行开发的业务系统一般都会暴露出一系列监控指标用来监控，如果需要自定义监控指标就要配合使用serviceMonitor来收集。下图是<a href="https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/troubleshooting.md#troubleshooting-servicemonitor-changes" target="_blank" rel="noopener">prometheus-operator</a>提供的自定义资源（Prometheus和serviceMonitor）与 k8s资 源（service和pod）关系图：</p>
+<p><!-- raw HTML omitted --></p>
+
+    </div>
+
+    
+        <div class="tags">
+            
+                <a href="https://www.tinystone.top/tags/kubernetes">Kubernetes</a>
+            
+                <a href="https://www.tinystone.top/tags/prometheus">Prometheus</a>
+            
+                <a href="https://www.tinystone.top/tags/servicemonitor">ServiceMonitor</a>
+            
+        </div>
+    
+    
+    
+
+</section>
+
+
+    </main>
+    
+    <footer id="footer">
+    
+
+    <div class="copyright">
+    
+       © Copyright 
+       2022 
+       <span class="split">
+        <svg fill="#bbbbbb" width="15" height="15" version="1.1" id="heart-15" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 15 15">
+  <path d="M13.91,6.75c-1.17,2.25-4.3,5.31-6.07,6.94c-0.1903,0.1718-0.4797,0.1718-0.67,0C5.39,12.06,2.26,9,1.09,6.75&#xA;&#x9;C-1.48,1.8,5-1.5,7.5,3.45C10-1.5,16.48,1.8,13.91,6.75z"/>
+</svg>
+       </span>
+       Taurus Tiny
+    
+    </div>
+
+    
+</footer>
+
+
+
+  </body>
+</html>

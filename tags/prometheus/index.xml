@@ -8,11 +8,11 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 19 Jan 2022 22:00:26 +0800</lastBuildDate><atom:link href="https://www.tinystone.top/tags/prometheus/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Prometheus ServiceMonitor</title>
-      <link>https://www.tinystone.top/posts/prometheus-servicemonitor/</link>
+      <title>通过serviceMonitor CRD获取自定义指标metrics</title>
+      <link>https://www.tinystone.top/posts/%E9%80%9A%E8%BF%87servicemonitor-crd%E8%8E%B7%E5%8F%96%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E6%A0%87metrics/</link>
       <pubDate>Wed, 19 Jan 2022 22:00:26 +0800</pubDate>
       
-      <guid>https://www.tinystone.top/posts/prometheus-servicemonitor/</guid>
+      <guid>https://www.tinystone.top/posts/%E9%80%9A%E8%BF%87servicemonitor-crd%E8%8E%B7%E5%8F%96%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E6%A0%87metrics/</guid>
       <description>TL;DR 🔗如果各类业务系统提供**/metrics**接口，并且指标数据满足prometheus时序数据的要求，就可以通过**serviceMon</description>
     </item>
     

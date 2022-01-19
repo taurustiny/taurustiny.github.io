@@ -17,9 +17,6 @@
     <loc>https://www.tinystone.top/tags/prometheus/</loc>
     <lastmod>2022-01-19T22:00:26+08:00</lastmod>
   </url><url>
-    <loc>https://www.tinystone.top/posts/prometheus-servicemonitor/</loc>
-    <lastmod>2022-01-19T22:00:26+08:00</lastmod>
-  </url><url>
     <loc>https://www.tinystone.top/tags/servicemonitor/</loc>
     <lastmod>2022-01-19T22:00:26+08:00</lastmod>
   </url><url>
@@ -27,6 +24,9 @@
     <lastmod>2022-01-19T22:00:26+08:00</lastmod>
   </url><url>
     <loc>https://www.tinystone.top/</loc>
+    <lastmod>2022-01-19T22:00:26+08:00</lastmod>
+  </url><url>
+    <loc>https://www.tinystone.top/posts/%E9%80%9A%E8%BF%87servicemonitor-crd%E8%8E%B7%E5%8F%96%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E6%A0%87metrics/</loc>
     <lastmod>2022-01-19T22:00:26+08:00</lastmod>
   </url><url>
     <loc>https://www.tinystone.top/tags/cronjob/</loc>
