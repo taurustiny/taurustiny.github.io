@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Taurus Tiny</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Jan 2022 21:59:08 +0800</lastBuildDate><atom:link href="https://www.tinystone.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 19 Jan 2022 22:00:26 +0800</lastBuildDate><atom:link href="https://www.tinystone.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Prometheus ServiceMonitor</title>
+      <link>https://www.tinystone.top/posts/prometheus-servicemonitor/</link>
+      <pubDate>Wed, 19 Jan 2022 22:00:26 +0800</pubDate>
+      
+      <guid>https://www.tinystone.top/posts/prometheus-servicemonitor/</guid>
+      <description>TL;DR 🔗如果各类业务系统提供**/metrics**接口，并且指标数据满足prometheus时序数据的要求，就可以通过**serviceMon</description>
+    </item>
+    
     <item>
       <title>Cronjob 并发规则(concurrencyPolicy)</title>
       <link>https://www.tinystone.top/posts/cronjob-%E5%B9%B6%E5%8F%91%E8%A7%84%E5%88%99concurrencypolicy/</link>
@@ -26,11 +35,11 @@
     </item>
     
     <item>
-      <title>Nginx</title>
-      <link>https://www.tinystone.top/posts/nginx/</link>
+      <title>Nginx基础知识</title>
+      <link>https://www.tinystone.top/posts/nginx%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
       <pubDate>Wed, 14 Jul 2021 23:41:25 +0800</pubDate>
       
-      <guid>https://www.tinystone.top/posts/nginx/</guid>
+      <guid>https://www.tinystone.top/posts/nginx%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</guid>
       <description>1.语法：nginx -s signal 🔗可执行文件支持的signal信号 🔗 stop 快速停止 reload 重新加载配置文件 quit 平滑停止 reopen 重新打开日志文件 nginx -s quit nginx -s reload signal</description>
     </item>
     

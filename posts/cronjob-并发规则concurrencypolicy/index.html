@@ -71,7 +71,7 @@
 
 
     <div class="content">
-      <h3 id="tldr">TL;DR <a href="#tldr" class="anchor">🔗</a></h3><p>在k8s 集群中添加计划任务(Cronjob)时，需要考虑关于<strong>调度时间间隔</strong>和<strong>计划任务执行时长</strong>的问题。如果调度频率相对过于频繁会出现一种情况：由于计划任务脚本执行时间过长，在前一次的计 划任务还没执行完的情况下，又开始了下一次调度。</p>
+      <h2 id="tldr">TL;DR <a href="#tldr" class="anchor">🔗</a></h2><p>在k8s 集群中添加计划任务(Cronjob)时，需要考虑关于<strong>调度时间间隔</strong>和<strong>计划任务执行时长</strong>的问题。如果调度频率相对过于频繁会出现一种情况：由于计划任务脚本执行时间过长，在前一次的计 划任务还没执行完的情况下，又开始了下一次调度。</p>
 <p><strong>Resolution</strong>: 只需根据需要相应调整 <strong>.spec.concurrencyPolicy</strong> ：</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#00f;font-weight:bold">...</span><span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">spec</span>:<span style="color:#bbb">
@@ -82,7 +82,7 @@
 <li><strong>Replace</strong>: 旧任务终止执行，并重新调度执行新任务</li>
 <li><strong>Forbid</strong>: 旧任务继续执行，忽略执行新任务</li>
 </ul>
-<h3 id="question-description">Question Description <a href="#question-description" class="anchor">🔗</a></h3><p>最近几天，业务告警系统中突然出现很多node load相关的 warning 和 critical 告警信息。</p>
+<h2 id="question-description">Question Description <a href="#question-description" class="anchor">🔗</a></h2><p>最近几天，业务告警系统中突然出现很多node load相关的 warning 和 critical 告警信息。</p>
 <p>在之前某次处理过这个问题，之后再也没发生过，就没继续关注了；之前因为告警的 node 都是同一个节点，大致查看下是因为多个 cronjob 总是默认调度到同一个告警节点执行 job,所以就在某些 cronjob上添加了 <strong>nodeName：WorkNodeName</strong> 把一些 job 绑定到其他节点。</p>
 <p>本次直接在 grafana 监控面板查看：告警节点上的 问题pod (cronjob 调度生成的)相对于同一节点其他pod来说，cpu 使用量会高出很多。虽然相对很多，但cpu使用量也没有超过 700m（1c=1000m）， 界面来看也没什么特别异常。于是就直接命令行操作了：</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#080;font-style:italic"># cronjob 部署在 default namespace</span>

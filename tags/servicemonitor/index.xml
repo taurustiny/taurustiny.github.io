@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ServiceMonitor on Taurus Tiny</title>
+    <link>https://www.tinystone.top/tags/servicemonitor/</link>
+    <description>Recent content in ServiceMonitor on Taurus Tiny</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 19 Jan 2022 22:00:26 +0800</lastBuildDate><atom:link href="https://www.tinystone.top/tags/servicemonitor/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Prometheus ServiceMonitor</title>
+      <link>https://www.tinystone.top/posts/prometheus-servicemonitor/</link>
+      <pubDate>Wed, 19 Jan 2022 22:00:26 +0800</pubDate>
+      
+      <guid>https://www.tinystone.top/posts/prometheus-servicemonitor/</guid>
+      <description>TL;DR 🔗如果各类业务系统提供**/metrics**接口，并且指标数据满足prometheus时序数据的要求，就可以通过**serviceMon</description>
+    </item>
+    
+  </channel>
+</rss>

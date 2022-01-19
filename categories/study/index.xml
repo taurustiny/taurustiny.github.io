@@ -8,11 +8,11 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 14 Jul 2021 23:41:25 +0800</lastBuildDate><atom:link href="https://www.tinystone.top/categories/study/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Nginx</title>
-      <link>https://www.tinystone.top/posts/nginx/</link>
+      <title>Nginx基础知识</title>
+      <link>https://www.tinystone.top/posts/nginx%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
       <pubDate>Wed, 14 Jul 2021 23:41:25 +0800</pubDate>
       
-      <guid>https://www.tinystone.top/posts/nginx/</guid>
+      <guid>https://www.tinystone.top/posts/nginx%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</guid>
       <description>1.语法：nginx -s signal 🔗可执行文件支持的signal信号 🔗 stop 快速停止 reload 重新加载配置文件 quit 平滑停止 reopen 重新打开日志文件 nginx -s quit nginx -s reload signal</description>
     </item>
     
