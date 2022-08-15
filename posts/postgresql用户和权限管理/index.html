@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>PostgreSQL用户和权限管理 | Taurus Tiny</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+<meta name="description" content="TL;DR 🔗创建角色 🔗--创建角色 CREATEROLErole_name;--授予角色连接数据库和使用schema的权限（只读角色） GRANTCON">
+<meta name="generator" content="Hugo 0.86.0-DEV" />
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+
+
+
+
+
+
+
+
+  </head>
+
+  <body>
+    <nav class="navigation">
+	
+		<a href="/"> <span class="arrow">←</span>首页</a>
+	
+	<a href="/posts">归档</a>
+	<a href="/categories">分类</a>
+	<a href="/tags">标签</a>
+	<a href="/about">关于</a>
+
+	
+
+	
+</nav>
+
+
+    <main class="main">
+      
+
+<section id="single">
+    <h1 class="title">PostgreSQL用户和权限管理</h1>
+
+    <div class="tip">
+        <time datetime="2022-03-30 20:41:25 &#43;0800 CST">2022年03月30日</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          1525字
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          4分钟
+        </span>
+    </div>
+
+    
+    
+
+
+    <div class="content">
+      <h1 id="tldr">TL;DR <a href="#tldr" class="anchor">🔗</a></h1><h2 id="创建角色">创建角色 <a href="#%e5%88%9b%e5%bb%ba%e8%a7%92%e8%89%b2" class="anchor">🔗</a></h2><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#080;font-style:italic">--创建角色
+</span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">CREATE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ROLE</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic">--授予角色连接数据库和使用schema的权限（只读角色）
+</span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">CONNECT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">DATABASE</span><span style="color:#bbb"> </span>database_name<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">USAGE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SCHEMA</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">schema_name</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic">--授予角色连接数据库和读写schema的权限（读写角色）
+</span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">CONNECT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">DATABASE</span><span style="color:#bbb"> </span>database_name<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">USAGE</span>,<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">CREATE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SCHEMA</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">schema_name</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic">--授予角色对某些表或者所有表的只读权限（只读角色）
+</span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SELECT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TABLE</span><span style="color:#bbb"> </span>table1,<span style="color:#bbb"> </span>table2<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SELECT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ALL</span><span style="color:#bbb"> </span>TABLES<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">IN</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SCHEMA</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">schema_name</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic">--授予角色对某些表或者所有表的读写权限（读写角色）
+</span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SELECT</span>,<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">INSERT</span>,<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">UPDATE</span>,<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">DELETE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TABLE</span><span style="color:#bbb"> </span>table1,<span style="color:#bbb"> </span>table2<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SELECT</span>,<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">INSERT</span>,<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">UPDATE</span>,<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">DELETE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ALL</span><span style="color:#bbb"> </span>TABLES<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">IN</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SCHEMA</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">schema_name</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic">--自动授予角色对新增表的权限（只读角色）
+</span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">ALTER</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">DEFAULT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">PRIVILEGES</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">IN</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SCHEMA</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">schema_name</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SELECT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span>TABLES<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic">--自动授予角色对新增表的权限（读写角色）
+</span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">ALTER</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">DEFAULT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">PRIVILEGES</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">IN</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SCHEMA</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">schema_name</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SELECT</span>,<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">INSERT</span>,<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">UPDATE</span>,<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">DELETE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span>TABLES<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic">--授予角色使用某些序列或者所有序列的权限（读写角色）
+</span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">USAGE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span>SEQUENCE<span style="color:#bbb"> </span>seq1,<span style="color:#bbb"> </span>seq2<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">USAGE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ALL</span><span style="color:#bbb"> </span>SEQUENCES<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">IN</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SCHEMA</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">schema_name</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic">--自动授予角色对新增序列的权限（读写角色）
+</span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">ALTER</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">DEFAULT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">PRIVILEGES</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">IN</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SCHEMA</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">schema_name</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">USAGE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span>SEQUENCES<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>role_name;<span style="color:#bbb">
+</span></code></pre></div><h2 id="创建用户并授权">创建用户并授权 <a href="#%e5%88%9b%e5%bb%ba%e7%94%a8%e6%88%b7%e5%b9%b6%e6%8e%88%e6%9d%83" class="anchor">🔗</a></h2><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#080;font-style:italic">--创建用户
+</span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">CREATE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">USER</span><span style="color:#bbb"> </span>user_name<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">WITH</span><span style="color:#bbb"> </span>PASSWORD<span style="color:#bbb"> </span><span style="color:#b44">&#39;passwd&#39;</span>;<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic">--授权用户
+</span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">GRANT</span><span style="color:#bbb"> </span>role_name<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">TO</span><span style="color:#bbb"> </span>user_name;<span style="color:#bbb">
+</span></code></pre></div><h1 id="description">Description <a href="#description" class="anchor">🔗</a></h1><p>​	在<code>pgsql</code>中，<code>user、group、role</code>是一样的概念，所以<code>CREATE USER</code>和<code>CREATE GROUP</code>可以看成是<code>CREATE ROLE</code>的别名命令。最主要的区别是<code>user</code>在默认创建时会有<code>login</code>的权限，而<code>role</code>和<code>group</code>没有登录权限。</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#a2f;font-weight:bold">CREATE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">USER</span><span style="color:#bbb"> </span>user_name<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">WITH</span><span style="color:#bbb"> </span>PASSWORD<span style="color:#bbb"> </span><span style="color:#b44">&#39;passwd&#39;</span>;<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic">--等价于
+</span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">CREATE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ROLE</span><span style="color:#bbb"> </span>user_name<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">WITH</span><span style="color:#bbb"> </span>LOGIN<span style="color:#bbb"> </span>PASSWORD<span style="color:#bbb"> </span><span style="color:#b44">&#39;passwd&#39;</span>;<span style="color:#bbb">
+</span></code></pre></div><p>​	PostgreSQL默认创建一个名为<code>public</code>的<code>schema</code>，并将这个<code>schema</code>的访问权授予一个名为public的角色。所有新的用户和角色都被默认授予这个<code>public</code>角色并可以在<code>public schema</code>中创建对象。</p>
+<p>​	在创建一个只读的用户时，即使限制了所有权限，但是通<code>public</code>角色继承的权限也允许用户在<code>public schema</code>中创建对象。要解决这个问题，应该从<code>public</code>角色撤销<code>public schema</code>上的默认<code>CREATE</code>权限。</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#080;font-style:italic">--撤销public schema上的 CREATE 权限
+</span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">REVOKE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">CREATE</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">ON</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">SCHEMA</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">FROM</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">PUBLIC</span>;<span style="color:#bbb">
+</span></code></pre></div>
+    </div>
+
+    
+        <div class="tags">
+            
+                <a href="https://www.tinystone.top/tags/postgresql">postgresql</a>
+            
+        </div>
+    
+    
+    
+
+</section>
+
+
+    </main>
+    
+    <footer id="footer">
+    
+
+    <div class="copyright">
+    
+       © Copyright 
+       2022 
+       <span class="split">
+        <svg fill="#bbbbbb" width="15" height="15" version="1.1" id="heart-15" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 15 15">
+  <path d="M13.91,6.75c-1.17,2.25-4.3,5.31-6.07,6.94c-0.1903,0.1718-0.4797,0.1718-0.67,0C5.39,12.06,2.26,9,1.09,6.75&#xA;&#x9;C-1.48,1.8,5-1.5,7.5,3.45C10-1.5,16.48,1.8,13.91,6.75z"/>
+</svg>
+       </span>
+       Taurus Tiny
+    
+    </div>
+
+    
+</footer>
+
+
+
+  </body>
+</html>

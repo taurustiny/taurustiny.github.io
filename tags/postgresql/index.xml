@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>postgresql on Taurus Tiny</title>
+    <link>https://www.tinystone.top/tags/postgresql/</link>
+    <description>Recent content in postgresql on Taurus Tiny</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 30 Mar 2022 20:41:25 +0800</lastBuildDate><atom:link href="https://www.tinystone.top/tags/postgresql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PostgreSQL用户和权限管理</title>
+      <link>https://www.tinystone.top/posts/postgresql%E7%94%A8%E6%88%B7%E5%92%8C%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Wed, 30 Mar 2022 20:41:25 +0800</pubDate>
+      
+      <guid>https://www.tinystone.top/posts/postgresql%E7%94%A8%E6%88%B7%E5%92%8C%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/</guid>
+      <description>TL;DR 🔗创建角色 🔗--创建角色 CREATEROLErole_name;--授予角色连接数据库和使用schema的权限（只读角色） GRANTCON</description>
+    </item>
+    
+  </channel>
+</rss>

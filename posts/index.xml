@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Taurus Tiny</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Jan 2022 22:00:26 +0800</lastBuildDate><atom:link href="https://www.tinystone.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Mar 2022 20:41:25 +0800</lastBuildDate><atom:link href="https://www.tinystone.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PostgreSQL用户和权限管理</title>
+      <link>https://www.tinystone.top/posts/postgresql%E7%94%A8%E6%88%B7%E5%92%8C%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Wed, 30 Mar 2022 20:41:25 +0800</pubDate>
+      
+      <guid>https://www.tinystone.top/posts/postgresql%E7%94%A8%E6%88%B7%E5%92%8C%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/</guid>
+      <description>TL;DR 🔗创建角色 🔗--创建角色 CREATEROLErole_name;--授予角色连接数据库和使用schema的权限（只读角色） GRANTCON</description>
+    </item>
+    
     <item>
       <title>通过serviceMonitor CRD获取自定义指标metrics</title>
       <link>https://www.tinystone.top/posts/%E9%80%9A%E8%BF%87servicemonitor-crd%E8%8E%B7%E5%8F%96%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E6%A0%87metrics/</link>
